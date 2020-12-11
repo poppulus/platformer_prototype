@@ -7,7 +7,7 @@ const int TICKS = 1000 / FPS;
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 360;
 
-const int TOTAL_TILES = 480;
+const int TOTAL_TILES =  240;
 
 bool checkCollision( SDL_Rect a, SDL_Rect b )
 {

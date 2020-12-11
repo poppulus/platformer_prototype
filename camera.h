@@ -32,5 +32,5 @@ void setCamera(SDL_Rect *screen, player player)
     else if (screen->x > 640 - screen->w) screen->x = 640 - screen->w;
 
     if (screen->y < 0) screen->y = 0;
-    else if (screen->y > 768 - screen->h) screen->y = 768 - screen->h;
+    else if (screen->y > 384 - screen->h) screen->y = 384 - screen->h;
 }

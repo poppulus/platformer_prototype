@@ -233,7 +233,7 @@ void setPlayer(player *player)
     player->height = 24;
 
     player->x = 320;
-    player->y = 768 - player->height - TILE_SIZE;
+    player->y = 384 - player->height - TILE_SIZE;
 
     player->xVel = 0;
     player->yVel = 0;
@@ -267,8 +267,12 @@ void update_player(player *player)
     if (player->x < 0) player->x = 0;
     else if (player->x + player->width > 640) player->x = 640 - player->width;
 
-    if (player->y < 0) player->y = 0;
-    else if (player->y + player->height > 768) player->y = 768 - player->height;
+    if (player->y < 0) 
+    {
+        player->y = 0;
+        player->yVel = 0;
+    }
+    else if (player->y + player->height > 384) player->y = 384 - player->height;
 
     if (player->yVel > 0) player->state = FALLING;
     else if (player->yVel < 0) player->state = JUMPING;
