@@ -53,7 +53,7 @@ void handlePadEvents(SDL_Event *e, player *p)
                 {
                     if (p->bounce)
                     {
-                        p->yVel = -5;
+                        p->yVel = -6;
                         p->bounceFrames = 0;
                         p->bounce = false;
                     }
@@ -131,7 +131,9 @@ void handleKeyEvents(SDL_Event *e, player *p)
                 {
                     if (p->bounce)
                     {
-                        p->yVel = -5;
+                        if (p->run) p->yVel = -6;
+                        else p->yVel = -5;
+                        
                         p->bounceFrames = 0;
                         p->bounce = false;
                     }
@@ -233,7 +235,7 @@ void setPlayer(player *player)
     player->height = 24;
 
     player->x = 320;
-    player->y = 384 - player->height - TILE_SIZE;
+    player->y = 300;
 
     player->xVel = 0;
     player->yVel = 0;
@@ -291,24 +293,23 @@ void update_player(player *player)
 
     switch (player->velocity)
     {
-        case 2:
         case 3:
+            player->running = true;
+        case 2:
             if (player->xVel++ >= player->velocity) player->xVel = player->velocity;
             break;
-        case -2:
         case -3:
+            player->running = true;
+        case -2:
             if (player->xVel-- <= player->velocity) player->xVel = player->velocity;
             break;
         case 0: 
+            player->running = false;
         default: 
             if (player->xVel < player->velocity) player->xVel++;
             else if (player->xVel > player->velocity) player->xVel--;
             break;
     }
-
-    if ((player->velocity == 3 
-    || player->velocity == -3) && player->xVel != 0) player->running = true;
-    else player->running = false; 
 
     switch (player->state)
     {

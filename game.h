@@ -118,10 +118,30 @@ void render_tiles(      // this function checks super tiles,
     {
         if (checkCollision(tileSet[i].box, camera) && tileSet[i].type > 0) 
         {
-            renderTexture(sheet, tileSet[i].box.x - camera.x, tileSet[i].box.y - camera.y, &tileClips[tileSet[i].set[0]], SDL_FLIP_NONE);
-            renderTexture(sheet, tileSet[i].box.x + 16 - camera.x, tileSet[i].box.y - camera.y, &tileClips[tileSet[i].set[1]], SDL_FLIP_NONE);
-            renderTexture(sheet, tileSet[i].box.x - camera.x, tileSet[i].box.y + 16 - camera.y, &tileClips[tileSet[i].set[2]], SDL_FLIP_NONE);
-            renderTexture(sheet, tileSet[i].box.x + 16 - camera.x, tileSet[i].box.y + 16 - camera.y, &tileClips[tileSet[i].set[3]], SDL_FLIP_NONE);
+            renderTexture(
+                sheet, 
+                tileSet[i].box.x - camera.x, 
+                tileSet[i].box.y - camera.y, 
+                &tileClips[tileSet[i].set[0]], 
+                SDL_FLIP_NONE);
+            renderTexture(
+                sheet, 
+                tileSet[i].box.x + 16 - camera.x, 
+                tileSet[i].box.y - camera.y, 
+                &tileClips[tileSet[i].set[1]], 
+                SDL_FLIP_NONE);
+            renderTexture(
+                sheet, 
+                tileSet[i].box.x - camera.x, 
+                tileSet[i].box.y + 16 - camera.y, 
+                &tileClips[tileSet[i].set[2]], 
+                SDL_FLIP_NONE);
+            renderTexture(
+                sheet, 
+                tileSet[i].box.x + 16 - camera.x, 
+                tileSet[i].box.y + 16 - camera.y, 
+                &tileClips[tileSet[i].set[3]], 
+                SDL_FLIP_NONE);
         }
     }
     //  test tile rendering here!!! //
@@ -145,10 +165,21 @@ void gameLoop(
     SDL_Rect *currentClip;
     SDL_Rect *enemyClip;
 
+    //  test hud stuff
+    hud hud;
+
+    hud.box.x = 260;
+    hud.box.y = 0;
+    hud.box.w = 120;
+    hud.box.h = 20;
+
+    hud.counter = 0;
+    //  
+
     tile tileSet[TOTAL_TILES];
 
     player player;
-    enemy enemies[4];
+    enemy enemies[20];
 
     camera camera;
 
@@ -159,6 +190,7 @@ void gameLoop(
     setEnemies(enemies);
 
     controller = SDL_JoystickOpen(0);
+
     if (controller == NULL)
     {
         printf("Warning: Unable to open game controller! SDL Error: %s\n", SDL_GetError());
@@ -174,7 +206,7 @@ void gameLoop(
         {
             timer = SDL_GetTicks();
 
-            while (SDL_PollEvent(&e) != 0)  // maybe just event polling ???
+            while (SDL_PollEvent(&e) != 0)
             {
                 switch (e.type)
                 {
@@ -226,17 +258,30 @@ void gameLoop(
             render_tiles(sheet, tileSet, tileClips, camera.box);
 
             //  render player
-            renderTexture(character, player.x - camera.box.x, player.y - camera.box.y, currentClip, player.facing);
+            renderTexture(
+                character, 
+                player.x - camera.box.x, 
+                player.y - camera.box.y, 
+                currentClip, 
+                player.facing);
 
             //  render enemies
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 5; i++)
             {
                 if (!enemies[i].dead)
                 {
                     enemyClip = &charClips[12];
-                    renderTexture(character, enemies[i].x - camera.box.x , enemies[i].y - camera.box.y, enemyClip, enemies[i].f);
+                    renderTexture(
+                        character, 
+                        enemies[i].x - camera.box.x , 
+                        enemies[i].y - camera.box.y, 
+                        enemyClip, 
+                        enemies[i].f);
                 }
             }
+
+            updateHUD(&hud, &player);
+            drawHUD(renderer, &hud.box);
 
             // put it all together
             SDL_RenderPresent(renderer);

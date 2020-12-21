@@ -12,8 +12,8 @@ int main()
 
     if (initSdl())
     {
-        charTexture.mTexture = loadTexture("characters.png");
-        sheetTexture.mTexture = loadTexture("sheet.png");
+        charTexture.mTexture = loadTexture("assets/characters.png");
+        sheetTexture.mTexture = loadTexture("assets/sheet.png");
 
         if (charTexture.mTexture == NULL) printf("Failed to load character image!\n");
         else if (sheetTexture.mTexture == NULL) printf("Failed to load sheet image!\n");

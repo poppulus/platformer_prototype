@@ -15,7 +15,7 @@ typedef struct enemy
 
 void setEnemies(enemy e[])
 {
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 5; i++)
     {
         e[i].w = 18;
         e[i].h = 14;
@@ -23,20 +23,24 @@ void setEnemies(enemy e[])
         switch (i)
         {
             case 0:
-                e[i].x = 128;
-                e[i].y = 288 - 14;
+                e[i].x = 8 << 5;
+                e[i].y = (10 << 5) - 14;
                 break;
             case 1:
-                e[i].x = 192;
-                e[i].y = 288 - 14;
+                e[i].x = 6 << 5;
+                e[i].y = (8 << 5) - 14;
                 break;
             case 2:
-                e[i].x = 288;
-                e[i].y = 256 - 14;
+                e[i].x = 11 << 5;
+                e[i].y = (8 << 5) - 14;
                 break;
             case 3:
-                e[i].x = 352;
-                e[i].y = 256 - 14;
+                e[i].x = 2 << 5;
+                e[i].y = (10 << 5) - 14;
+                break;
+            case 4:
+                e[i].x = 17 << 5;
+                e[i].y = (10 << 5) - 14;
                 break;
         }
 
@@ -112,7 +116,7 @@ void update_enemy(enemy *e, player *p)
 
 void update_enemies(enemy enemies[], player *p)
 {
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 5; i++)
     {
         update_enemy(&enemies[i], p);
     }

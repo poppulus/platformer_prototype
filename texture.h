@@ -5,16 +5,14 @@
 SDL_Window *window = NULL;
 SDL_Renderer *renderer = NULL;
 
-typedef struct texture texture;
-
-struct texture                  // what to do with this?
+typedef struct texture                  // what to do with this?
 {
     SDL_Texture *mTexture;
 
     int mWidth, mHeight;
 
     //bool (*loadTexture)(char* [], SDL_Texture*);
-}; 
+} texture; 
 
 void freeTexture(texture *text)
 {
